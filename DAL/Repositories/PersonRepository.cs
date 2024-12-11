@@ -50,7 +50,7 @@ namespace DAL.Repositories
             File.WriteAllText(_dataPath, json.ToString());
         }
 
-        public Dictionary<string, List<Person>> FindCloseRelatives(Person person, int level)
+        public Dictionary<string, List<Person>> FindCloseRelatives(Person person)
         {
             var relatives = new Dictionary<string, List<Person>>();
 

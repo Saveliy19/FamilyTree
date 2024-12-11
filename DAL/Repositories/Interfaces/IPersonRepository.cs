@@ -17,6 +17,6 @@ namespace DAL.Repositories.Interfaces
         public void DeleteAll();
 
         // найти близких родственников
-        public Dictionary<string, List<Person>> FindCloseRelatives(Person person, int level);
+        public Dictionary<string, List<Person>> FindCloseRelatives(Person person);
     }
 }
