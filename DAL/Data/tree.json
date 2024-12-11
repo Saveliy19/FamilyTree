@@ -1,0 +1,41 @@
+{
+  "people": {
+    "1": {
+      "name": "Ivanov Ivan Ivanovich",
+      "birthdate": "19.03.2003",
+      "sex": "Male",
+      "spouse": 2,
+      "parents": [],
+      "children": [ 3, 4 ]
+    },
+
+    "2": {
+      "name": "Ivanova Anna Pavlovna",
+      "birthdate": "19.03.2005",
+      "sex": "Female",
+      "spouse": 1,
+      "parents": [],
+      "children": [ 3, 4 ]
+    },
+
+    "3": {
+      "name": "Ivanova Anna Ivanovna",
+      "birthdate": "19.03.2024",
+      "sex": "Female",
+      "spouse": null,
+      "parents": [ 1, 2 ],
+      "children": []
+    },
+
+    "4": {
+      "name": "Ivanova Andrey Ivanovich",
+      "birthdate": "19.03.2023",
+      "sex": "Male",
+      "spouse": null,
+      "parents": [ 1, 2 ],
+      "children": []
+    }
+
+  }
+
+}
