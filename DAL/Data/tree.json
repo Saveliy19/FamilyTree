@@ -1,7 +1,7 @@
 {
   "people": {
     "1": {
-      "name": "Костерев Савелий Андреевич",
+      "name": "Иванов Иван Иванович",
       "birthdate": "2003-03-19",
       "sex": "Male",
       "spouse": 2,
@@ -15,19 +15,22 @@
       ]
     },
     "2": {
-      "name": "Костерева Катерина Алексеевна",
+      "name": "Иванова Марина Петровна",
       "birthdate": "2006-03-19",
       "sex": "Female",
       "spouse": 1,
-      "parents": [],
+      "parents": [
+        7,
+        8
+      ],
       "children": [
         3,
         4
       ]
     },
     "3": {
-      "name": "Костерева Варвара Савельевна",
-      "birthdate": "2025-03-18",
+      "name": "Иванова Светлана Ивановна",
+      "birthdate": "2023-03-19",
       "sex": "Female",
       "spouse": null,
       "parents": [
@@ -37,20 +40,20 @@
       "children": []
     },
     "4": {
-      "name": "Костерев Александр Савельевич",
-      "birthdate": "2026-05-17",
+      "name": "Иванова Сергей Иванович",
+      "birthdate": "2024-05-07",
       "sex": "Male",
       "spouse": null,
       "parents": [
-        2,
-        1
+        1,
+        2
       ],
       "children": []
     },
     "5": {
-      "name": "Костерев Андрей Павлович",
-      "birthdate": "31.08.1970",
-      "sex": "Male",
+      "name": "Иванова Евдокия Петровна",
+      "birthdate": "1983-02-14",
+      "sex": "Female",
       "spouse": 6,
       "parents": [],
       "children": [
@@ -58,9 +61,9 @@
       ]
     },
     "6": {
-      "name": "Костерева Наталья Владимировна",
-      "birthdate": "15.11.1969",
-      "sex": "Female",
+      "name": "Иванова Светлана Ивановна",
+      "birthdate": "1982-01-19",
+      "sex": "Male",
       "spouse": 5,
       "parents": [],
       "children": [
@@ -68,9 +71,75 @@
       ]
     },
     "7": {
-      "name": "Костерева Мария Савельевна",
-      "birthdate": "11.09.2027",
+      "name": "Симонова Валерия Аркадьевна",
+      "birthdate": "1963-02-14",
       "sex": "Female",
+      "spouse": 8,
+      "parents": [],
+      "children": [
+        2
+      ]
+    },
+    "8": {
+      "name": "Симонов Петр Евгеньевич",
+      "birthdate": "1962-01-19",
+      "sex": "Male",
+      "spouse": 7,
+      "parents": [
+        9,
+        10
+      ],
+      "children": [
+        2
+      ]
+    },
+    "9": {
+      "name": "Симонова Марина Эдуардовна",
+      "birthdate": "1943-02-14",
+      "sex": "Female",
+      "spouse": 10,
+      "parents": [
+        11,
+        12
+      ],
+      "children": [
+        8
+      ]
+    },
+    "10": {
+      "name": "Симонов Евгений Петрович",
+      "birthdate": "1942-01-19",
+      "sex": "Male",
+      "spouse": 9,
+      "parents": [],
+      "children": [
+        8
+      ]
+    },
+    "11": {
+      "name": "Попова Оксана Карповна",
+      "birthdate": "1913-02-14",
+      "sex": "Female",
+      "spouse": 12,
+      "parents": [],
+      "children": [
+        9
+      ]
+    },
+    "12": {
+      "name": "Попов Эдуард Семенович",
+      "birthdate": "1922-01-19",
+      "sex": "Male",
+      "spouse": 11,
+      "parents": [],
+      "children": [
+        9
+      ]
+    },
+    "13": {
+      "name": "Сидоров Иван Афанасьевич",
+      "birthdate": "10.11.1981",
+      "sex": "Male",
       "spouse": null,
       "parents": [],
       "children": []

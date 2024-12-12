@@ -1,4 +1,5 @@
 ﻿using DAL.Entities;
+using Spectre.Console;
 
 namespace BLL.Managers.Interfaces
 {
@@ -21,6 +22,6 @@ namespace BLL.Managers.Interfaces
 
 
         // Показать получившееся древо;
-
+        public Tree LoadTree(int rootId);
     }
 }
