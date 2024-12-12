@@ -5,12 +5,17 @@ VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{9DBA0947-CD3F-4288-B047-C43B4DA1E1D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{AB573354-0E30-4D40-9410-1E652227E35D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{AB573354-0E30-4D40-9410-1E652227E35D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{9DBA0947-CD3F-4288-B047-C43B4DA1E1D5} = {9DBA0947-CD3F-4288-B047-C43B4DA1E1D5}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "Presentation\Presentation.csproj", "{9BD0A526-4FFC-4B85-BC8C-71D39C544D43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation", "Presentation\Presentation.csproj", "{9BD0A526-4FFC-4B85-BC8C-71D39C544D43}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{BF8185AC-0391-4E8F-A0EE-B87D128680D7}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Packages.props = Directory.Packages.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
