@@ -11,7 +11,8 @@
       ],
       "children": [
         3,
-        4
+        4,
+        14
       ]
     },
     "2": {
@@ -25,7 +26,8 @@
       ],
       "children": [
         3,
-        4
+        4,
+        14
       ]
     },
     "3": {
@@ -144,6 +146,17 @@
       "spouse": null,
       "parents": [
         8
+      ],
+      "children": []
+    },
+    "14": {
+      "name": "Иванов Сергей Иванович",
+      "birthdate": "02.04.2022",
+      "sex": "Male",
+      "spouse": null,
+      "parents": [
+        1,
+        2
       ],
       "children": []
     }

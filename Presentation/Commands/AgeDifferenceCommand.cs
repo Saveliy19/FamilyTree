@@ -11,13 +11,17 @@ namespace Presentation.Commands
         public AgeDifferenceCommand(ITreeManager treeManager) { _treeManager = treeManager; }
         public void Execute()
         {
-            Console.Clear();
-            var id1 = AnsiConsole.Ask<int>("Введите [bold green]Id первого человека[/]: ");
-            var id2 = AnsiConsole.Ask<int>("Введите [bold green]Id второго человека[/]: ");
+            try
+            {
+                Console.Clear();
+                var id1 = AnsiConsole.Ask<int>("Введите [bold green]Id первого человека[/]: ");
+                var id2 = AnsiConsole.Ask<int>("Введите [bold green]Id второго человека[/]: ");
 
-            int ageDifference = _treeManager.GetPersonsAgeDifference(new Person() { Id = id1 }, new DAL.Entities.Person() { Id = id2 });
+                int ageDifference = _treeManager.GetPersonsAgeDifference(new Person() { Id = id1 }, new DAL.Entities.Person() { Id = id2 });
 
-            AnsiConsole.MarkupLine($"[bold yellow]Разница в возрасте в годах: {ageDifference}[/]");
+                AnsiConsole.MarkupLine($"[bold yellow]Разница в возрасте в годах: {ageDifference}[/]");
+            }
+            catch (Exception ex) { AnsiConsole.MarkupLine($"[bold red]{ex.Message}[/]"); }
         }
     }
 }

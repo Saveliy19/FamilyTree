@@ -12,36 +12,40 @@ namespace Presentation.Commands
 
         public void Execute()
         {
-            var id = AnsiConsole.Ask<int>("Введите [bold green]id человека[/], для которого нужно установить родственные связи: ");
-            var person = new Person() { Id = id };
-
-            var choice = AnsiConsole.Prompt(
-            new SelectionPrompt<string>()
-                .Title($"Что вы хотите установить для [bold green]человека с id {id}[/]?")
-                .AddChoices("Супруга", "Родителей", "Детей", "Завершить"));
-
-            switch (choice)
+            try
             {
-                case "Супруга":
-                    SetSpouse(person);
-                    break;
+                var id = AnsiConsole.Ask<int>("Введите [bold green]id человека[/], для которого нужно установить родственные связи: ");
+                var person = new Person() { Id = id };
 
-                case "Родителей":
-                    SetParents(person);
-                    break;
+                var choice = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title($"Что вы хотите установить для [bold green]человека с id {id}[/]?")
+                    .AddChoices("Супруга", "Родителей", "Детей", "Завершить"));
 
-                case "Детей":
-                    SetChildren(person);
-                    break;
+                switch (choice)
+                {
+                    case "Супруга":
+                        SetSpouse(person);
+                        break;
 
-                case "Завершить":
-                    AnsiConsole.MarkupLine("[bold green]Процесс завершен.[/]");
-                    return;
+                    case "Родителей":
+                        SetParents(person);
+                        break;
+
+                    case "Детей":
+                        SetChildren(person);
+                        break;
+
+                    case "Завершить":
+                        AnsiConsole.MarkupLine("[bold green]Процесс завершен.[/]");
+                        return;
+                }
+
+                _treeManager.UpdatePerson(person);
+
+                AnsiConsole.MarkupLine($"[bold green]Родственные связи для человека с id {person.Id} успешно обновлены![/]");
             }
-
-            _treeManager.UpdatePerson(person);
-
-            AnsiConsole.MarkupLine($"[bold green]Родственные связи для человека с id {person.Id} успешно обновлены![/]");
+            catch (Exception ex) { AnsiConsole.MarkupLine($"[bold red]{ex.Message}[/]"); }            
         }
 
         private void SetSpouse(Person person)
@@ -59,17 +63,20 @@ namespace Presentation.Commands
             var parents = new List<Person>();
             var counter = 0;
 
-            string addMoreParent = "y";
-
-            do
+            while (counter < 2)
             {
-                if (counter > 1) break;
                 var parentId = AnsiConsole.Ask<int>("Введите [bold yellow]Id родителя[/]: ");
+
                 parents.Add(new Person() { Id = parentId });
                 counter++;
-                addMoreParent = AnsiConsole.Ask<string>("Хотите добавить еще одного родителя? (y/n): ").ToLower();
+
+                if (counter < 2)
+                {
+                    string addMoreParent = AnsiConsole.Ask<string>("Хотите добавить еще одного родителя? (y/n): ").ToLower();
+                    if (addMoreParent != "y")
+                        break;
+                }
             }
-            while (addMoreParent == "y");
             person.Parents = parents;
         }
 

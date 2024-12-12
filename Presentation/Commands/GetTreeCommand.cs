@@ -11,11 +11,15 @@ namespace Presentation.Commands
 
         public void Execute() 
         {
-            Console.Clear();
-            Console.Write("Введите айди человека, для которого необходимо вывести древо: ");
-            string id = Console.ReadLine();
-            var tree = _treeManager.LoadTree(int.Parse(id));
-            AnsiConsole.Write(tree);
+            try
+            {
+                Console.Clear();
+                Console.Write("Введите айди человека, для которого необходимо вывести древо: ");
+                string id = Console.ReadLine();
+                var tree = _treeManager.LoadTree(int.Parse(id));
+                AnsiConsole.Write(tree);
+            }
+            catch (Exception ex) { AnsiConsole.MarkupLine($"[bold red]{ex.Message}[/]"); }            
         }
     }
 }

@@ -11,19 +11,23 @@ namespace Presentation.Commands
         public CreatePersonCommand(ITreeManager treeManager) { _treeManager = treeManager; }
         public void Execute()
         {
-            var name = AnsiConsole.Ask<string>("Введите [bold green]ФИО человека[/]: ");
-            var sex = AnsiConsole.Ask<string>("Введите [bold green]пол (Male/Female)[/]: ");
-            var birthdate = AnsiConsole.Ask<string>("Введите [bold green]дату рождения в формате dd-mm-yyyy[/]: ");
-
-            _treeManager.AddPerson(new Person()
+            try
             {
-                Name = name,
-                Sex = sex,
-                Birthdate = DateTime.Parse(birthdate),
-            });
+                var name = AnsiConsole.Ask<string>("Введите [bold green]ФИО человека[/]: ");
+                var sex = AnsiConsole.Ask<string>("Введите [bold green]пол (Male/Female)[/]: ");
+                var birthdate = AnsiConsole.Ask<string>("Введите [bold green]дату рождения в формате dd-mm-yyyy[/]: ");
 
-            Console.Clear();
-            AnsiConsole.MarkupLine($"[bold green]{name} успешно добавлен![/]");
+                _treeManager.AddPerson(new Person()
+                {
+                    Name = name,
+                    Sex = sex,
+                    Birthdate = DateTime.Parse(birthdate),
+                });
+
+                Console.Clear();
+                AnsiConsole.MarkupLine($"[bold green]{name} успешно добавлен![/]");
+            }
+            catch (Exception ex) { AnsiConsole.MarkupLine($"[bold red]{ex.Message}[/]"); }
         }
     }
 }
