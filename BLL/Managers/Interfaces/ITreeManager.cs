@@ -23,5 +23,7 @@ namespace BLL.Managers.Interfaces
 
         // Показать получившееся древо;
         public Tree LoadTree(int rootId);
+
+        public List<Person> GetAllPersons();
     }
 }

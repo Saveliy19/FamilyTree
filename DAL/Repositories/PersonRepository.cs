@@ -130,6 +130,44 @@ namespace DAL.Repositories
             }
         }
 
+        public List<Person> GetAll()
+        {
+            JObject json = JObject.Parse(File.ReadAllText(_dataPath));
+
+            var people = json["people"].ToObject<JObject>();
+
+            var personList = new List<Person>();
+
+            foreach (var personId in people.Properties())
+            {
+                int id = int.Parse(personId.Name);
+                var personData = personId.Value;
+
+                var person = new Person
+                {
+                    Id = id,
+                    Name = personData["name"]?.ToString(),
+                    Sex = personData["sex"]?.ToString(),
+                    Birthdate = DateTime.Parse(personData["birthdate"].ToString()),
+
+                    Spouse = personData["spouse"] != null && !string.IsNullOrEmpty(personData["spouse"].ToString())
+                        ? new Person { Id = int.Parse(personData["spouse"].ToString()) }
+                        : null,
+
+                    Parents = personData["parents"] != null && personData["parents"].HasValues
+                        ? personData["parents"].Select(p => new Person { Id = int.Parse(p.ToString()) }).ToList()
+                        : new List<Person>(),
+
+                    Children = personData["children"] != null && personData["children"].HasValues
+                        ? personData["children"].Select(c => new Person { Id = int.Parse(c.ToString()) }).ToList()
+                        : new List<Person>()
+                };
+                personList.Add(person);
+            }
+
+            return personList;
+        }
+
 
         public void Update(Person person)
         {

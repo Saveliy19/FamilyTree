@@ -22,6 +22,7 @@ namespace Presentation.Factories
                 "4" => new AgeDifferenceCommand(_treeManager),
                 "5" => new CloseRelativesCommand(_treeManager),
                 "6" => new GetTreeCommand(_treeManager),
+                "7" => new ShowAllPersonsCommand(_treeManager),
                 _ => null
             };
         }

@@ -18,5 +18,9 @@ namespace DAL.Repositories.Interfaces
 
         // найти близких родственников
         public Dictionary<string, List<Person>> FindCloseRelatives(Person person);
+
+        // найти всех людей в дереве
+
+        public List<Person> GetAll();
     }
 }

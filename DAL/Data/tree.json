@@ -90,7 +90,8 @@
         10
       ],
       "children": [
-        2
+        2,
+        13
       ]
     },
     "9": {
@@ -141,7 +142,9 @@
       "birthdate": "10.11.1981",
       "sex": "Male",
       "spouse": null,
-      "parents": [],
+      "parents": [
+        8
+      ],
       "children": []
     }
   }

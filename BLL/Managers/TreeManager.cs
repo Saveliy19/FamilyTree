@@ -125,5 +125,10 @@ namespace BLL.Managers
             return tree;
         }
 
+        public List<Person> GetAllPersons()
+        {
+            return _personRepository.GetAll();
+        }
+
     }
 }
