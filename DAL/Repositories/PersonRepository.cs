@@ -20,17 +20,19 @@ namespace DAL.Repositories
             int newId = json["people"].Children<JProperty>().Count() + 1;
 
             var childrenList = new JArray();
-            foreach (var child in person.Children) { childrenList.Add(child.Id); }
+            if (person.Children is not null)
+                foreach (var child in person.Children) { childrenList.Add(child.Id); }
 
             var parentsList = new JArray();
-            foreach (var parent in person.Parents) { parentsList.Add(parent.Id); }
+            if (person.Parents is not null)
+                foreach (var parent in person.Parents) { parentsList.Add(parent.Id); }
 
             var newPerson = new JObject
             {
                 { "name", person.Name },
-                { "birthdate", person.Birthdate },
+                { "birthdate", person.Birthdate.ToString("dd.MM.yyyy") },
                 { "sex", person.Sex },
-                { "spouse", person.Spouse.Id},
+                { "spouse", person.Spouse != null ? (JToken)person.Spouse.Id : null },
                 { "parents", parentsList},
                 { "children", childrenList}
             };
@@ -54,128 +56,119 @@ namespace DAL.Repositories
         {
             var relatives = new Dictionary<string, List<Person>>();
 
-            JObject json = JObject.Parse(File.ReadAllText(_dataPath));
+            // Получаем данные о текущем человеке из JSON
+            var currentPerson = Get(person.Id);
 
-            var lookingPerson = json["people"].FirstOrDefault(p => p.Path == $"people.{person.Id.ToString()}");
-
-            if (lookingPerson != null) 
+            // Поиск супруга
+            if (currentPerson.Spouse != null)
             {
-                // ищем супруга
-                var relativeJson = json["people"].FirstOrDefault(p => p.Path == $"people.{lookingPerson["spouce"].ToString()}");
-                var relative = new Person()
-                {
-                    Id = int.Parse(lookingPerson["spouse"].ToString()),
-                    Name = relativeJson["name"].ToString(),
-                    Sex = relativeJson["sex"].ToString(),
-                    Birthdate = DateTime.Parse(relativeJson["birthdate"].ToString()),
-                };
-
-                relatives.Add("Spouce", new List<Person> { relative });
-
-                var persons = new List<Person>();
-                // ищем родителей
-                foreach (var parentId in lookingPerson["parents"])
-                {
-                    if (parentId != null)
-                    {
-                        relativeJson = json["people"].FirstOrDefault(p => p.Path == $"people.{parentId.ToString()}");
-                        relative = new Person()
-                        {
-                            Id = int.Parse(parentId.ToString()),
-                            Name = relativeJson["name"].ToString(),
-                            Sex = relativeJson["sex"].ToString(),
-                            Birthdate = DateTime.Parse(relativeJson["birthdate"].ToString()),
-                        };
-
-                        persons.Add(relative);
-                    }
-                }
-
-                relatives.Add("Parents", persons);
-
-                persons = new List<Person>();
-                // ищем детей
-                foreach (var childId in lookingPerson["children"])
-                {
-                    if (childId != null)
-                    {
-                        relativeJson = json["people"].FirstOrDefault(p => p.Path == $"people.{childId.ToString()}");
-                        relative = new Person()
-                        {
-                            Id = int.Parse(childId.ToString()),
-                            Name = relativeJson["name"].ToString(),
-                            Sex = relativeJson["sex"].ToString(),
-                            Birthdate = DateTime.Parse(relativeJson["birthdate"].ToString()),
-                        };
-
-                        persons.Add(relative);
-                    }
-                }
-
-                relatives.Add("Children", persons);
-
-
-                return relatives;
+                var spouse = Get(currentPerson.Spouse.Id);
+                relatives.Add("Супруг(а)", new List<Person> { spouse });
             }
-            else { throw new Exception(); }
 
-            
+            // Поиск родителей
+            if (currentPerson.Parents != null && currentPerson.Parents.Any())
+            {
+                var parents = currentPerson.Parents
+                    .Select(parent => Get(parent.Id))
+                    .ToList();
+                relatives.Add("Родители", parents);
+            }
+
+            // Поиск детей
+            if (currentPerson.Children != null && currentPerson.Children.Any())
+            {
+                var children = currentPerson.Children
+                    .Select(child => Get(child.Id))
+                    .ToList();
+                relatives.Add("Дети", children);
+            }
+
+            return relatives;
         }
+
+
 
         public Person Get(int personId)
         {
+            // Чтение JSON из файла
             JObject json = JObject.Parse(File.ReadAllText(_dataPath));
 
-            var jsonPerson = json["people"].FirstOrDefault(p => p.Path == $"people.{personId.ToString()}");
+            // Поиск человека по ID
+            var jsonPerson = json["people"][$"{personId}"];
 
             if (jsonPerson != null)
             {
-                var person = new Person()
+                var person = new Person
                 {
                     Id = personId,
-                    Name = jsonPerson["name"].ToString(),
-                    Sex = jsonPerson["sex"].ToString(),
-                    Birthdate = DateTime.Parse(jsonPerson["birthdate"]?.ToString()),
+                    Name = jsonPerson["name"]?.ToString(),
+                    Sex = jsonPerson["sex"]?.ToString(),
+                    Birthdate = DateTime.Parse(jsonPerson["birthdate"].ToString()),
 
-                    Spouse = jsonPerson["spouse"] != null
-                    ? new Person { Id = (int)jsonPerson["spouse"] }
-                    : null,
+                    // Супруг
+                    Spouse = jsonPerson["spouse"] != null && !string.IsNullOrEmpty(jsonPerson["spouse"].ToString())
+                        ? new Person { Id = int.Parse(jsonPerson["spouse"].ToString()) }
+                        : null,
 
-                    Parents = jsonPerson["parents"] != null
-                    ? jsonPerson["parents"].Select(p => new Person { Id = (int)p }).ToList()
-                    : new List<Person>(),
+                    // Родители
+                    Parents = jsonPerson["parents"] != null && jsonPerson["parents"].HasValues
+                        ? jsonPerson["parents"].Select(p => new Person { Id = int.Parse(p.ToString()) }).ToList()
+                        : new List<Person>(),
 
-                    Children = jsonPerson["children"] != null
-                    ? jsonPerson["children"].Select(c => new Person { Id = (int)c }).ToList()
-                    : new List<Person>()
+                    // Дети
+                    Children = jsonPerson["children"] != null && jsonPerson["children"].HasValues
+                        ? jsonPerson["children"].Select(c => new Person { Id = int.Parse(c.ToString()) }).ToList()
+                        : new List<Person>()
                 };
 
                 return person;
             }
-            else { throw new Exception(); }
+            else
+            {
+                throw new Exception($"Человек с ID {personId} не найден.");
+            }
         }
+
 
         public void Update(Person person)
         {
-
             JObject json = JObject.Parse(File.ReadAllText(_dataPath));
 
-            var personToUpdate = json["people"].FirstOrDefault(p => p.Path == $"people.{person.Id.ToString()}" );
+            var personToUpdate = json["people"][$"{person.Id}"];
+            if (personToUpdate == null) throw new Exception($"Человек с ID {person.Id} не найден.");
 
-            if (personToUpdate != null)
+            if (person.Spouse != null) personToUpdate["spouse"] = JToken.FromObject(person.Spouse.Id);
+
+            var existingParents = personToUpdate["parents"] as JArray ?? new JArray();
+            if (person.Parents != null)
             {
-                personToUpdate["name"] = person.Name;
-                personToUpdate["spouse"] = person.Spouse.Id;
-
-                var childrenList = new JArray();
-                foreach (var child in person.Children) { childrenList.Add(child.Id); }
-
-                var parentsList = new JArray();
-                foreach (var parent in person.Parents) { parentsList.Add(parent.Id); }
-
-                File.WriteAllText(_dataPath, json.ToString());
+                foreach (var parent in person.Parents)
+                {
+                    if (!existingParents.Any(p => (int)p == parent.Id))
+                    {
+                        existingParents.Add(parent.Id);
+                    }
+                }
             }
-            else { throw new Exception(); }
+            personToUpdate["parents"] = existingParents;
+
+            var existingChildren = personToUpdate["children"] as JArray ?? new JArray();
+            if (person.Children != null)
+            {
+                foreach (var child in person.Children)
+                {
+                    if (!existingChildren.Any(c => (int)c == child.Id))
+                    {
+                        existingChildren.Add(child.Id);
+                    }
+                }
+            }
+            personToUpdate["children"] = existingChildren;
+            File.WriteAllText(_dataPath, json.ToString());
         }
+
+
+
     }
 }

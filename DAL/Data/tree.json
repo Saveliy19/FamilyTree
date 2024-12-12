@@ -1,41 +1,79 @@
 {
   "people": {
     "1": {
-      "name": "Ivanov Ivan Ivanovich",
-      "birthdate": "19.03.2003",
+      "name": "Костерев Савелий Андреевич",
+      "birthdate": "2003-03-19",
       "sex": "Male",
       "spouse": 2,
-      "parents": [],
-      "children": [ 3, 4 ]
+      "parents": [
+        5,
+        6
+      ],
+      "children": [
+        3,
+        4
+      ]
     },
-
     "2": {
-      "name": "Ivanova Anna Pavlovna",
-      "birthdate": "19.03.2005",
+      "name": "Костерева Катерина Алексеевна",
+      "birthdate": "2006-03-19",
       "sex": "Female",
       "spouse": 1,
       "parents": [],
-      "children": [ 3, 4 ]
+      "children": [
+        3,
+        4
+      ]
     },
-
     "3": {
-      "name": "Ivanova Anna Ivanovna",
-      "birthdate": "19.03.2024",
+      "name": "Костерева Варвара Савельевна",
+      "birthdate": "2025-03-18",
       "sex": "Female",
       "spouse": null,
-      "parents": [ 1, 2 ],
+      "parents": [
+        1,
+        2
+      ],
       "children": []
     },
-
     "4": {
-      "name": "Ivanova Andrey Ivanovich",
-      "birthdate": "19.03.2023",
+      "name": "Костерев Александр Савельевич",
+      "birthdate": "2026-05-17",
       "sex": "Male",
       "spouse": null,
-      "parents": [ 1, 2 ],
+      "parents": [
+        2,
+        1
+      ],
+      "children": []
+    },
+    "5": {
+      "name": "Костерев Андрей Павлович",
+      "birthdate": "31.08.1970",
+      "sex": "Male",
+      "spouse": 6,
+      "parents": [],
+      "children": [
+        1
+      ]
+    },
+    "6": {
+      "name": "Костерева Наталья Владимировна",
+      "birthdate": "15.11.1969",
+      "sex": "Female",
+      "spouse": 5,
+      "parents": [],
+      "children": [
+        1
+      ]
+    },
+    "7": {
+      "name": "Костерева Мария Савельевна",
+      "birthdate": "11.09.2027",
+      "sex": "Female",
+      "spouse": null,
+      "parents": [],
       "children": []
     }
-
   }
-
 }

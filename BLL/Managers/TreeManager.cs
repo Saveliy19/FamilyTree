@@ -51,6 +51,30 @@ namespace BLL.Managers
 
         public void UpdatePerson(Person person)
         {
+            if (person.Parents != null) 
+            {
+                foreach (Person parent in person.Parents) 
+                {
+                    parent.Children = new List<Person>() { person };
+                    _personRepository.Update(parent);
+                }
+            }
+
+            if (person.Children != null) 
+            {
+                foreach(Person child in person.Children)
+                {
+                    child.Parents = new List<Person> { person };
+                    _personRepository.Update(child);
+                }
+            }
+
+            if (person.Spouse != null)
+            {
+                person.Spouse.Spouse = person;
+                _personRepository.Update(person.Spouse);
+            }
+
             _personRepository.Update(person);
         }
     }
